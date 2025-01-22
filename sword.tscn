@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://bsn7ot3d2yqo4"]
+
+[ext_resource type="Texture2D" uid="uid://b730bk88nj2wt" path="res://Sword.png" id="1_47tfy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_p07t1"]
+radius = 53.0094
+
+[node name="Sword" type="Area2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(-30, -5)
+texture = ExtResource("1_47tfy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_p07t1")
+
+[node name="SwordPivot" type="Marker2D" parent="."]

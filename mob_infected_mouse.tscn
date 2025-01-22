@@ -1,0 +1,53 @@
+[gd_scene load_steps=9 format=3 uid="uid://dl5uk7pb77135"]
+
+[ext_resource type="Texture2D" uid="uid://ciyu2342okhq5" path="res://InfectedMouse.png" id="1_gdfri"]
+[ext_resource type="Script" path="res://mob_infected_mouse.gd" id="1_hv6j7"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_y52yx"]
+radius = 5.09902
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rihmu"]
+atlas = ExtResource("1_gdfri")
+region = Rect2(0, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4osa2"]
+atlas = ExtResource("1_gdfri")
+region = Rect2(16, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tlna6"]
+atlas = ExtResource("1_gdfri")
+region = Rect2(32, 0, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d5cmt"]
+atlas = ExtResource("1_gdfri")
+region = Rect2(48, 0, 16, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_de186"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rihmu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_4osa2")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tlna6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d5cmt")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="mob_infected_mouse" type="CharacterBody2D"]
+script = ExtResource("1_hv6j7")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 6)
+shape = SubResource("CircleShape2D_y52yx")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_de186")
