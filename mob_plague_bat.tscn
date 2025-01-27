@@ -4,7 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ciyu2342okhq5" path="res://InfectedMouse.png" id="2_rxoye"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_y52yx"]
-radius = 5.09902
+radius = 5.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_rihmu"]
 atlas = ExtResource("2_rxoye")

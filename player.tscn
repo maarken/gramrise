@@ -1,9 +1,10 @@
-[gd_scene load_steps=17 format=3 uid="uid://dffhgif5rvd28"]
+[gd_scene load_steps=18 format=3 uid="uid://dffhgif5rvd28"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_khyeu"]
 [ext_resource type="Texture2D" uid="uid://721gieuy5dp6" path="res://ground_shadow.png" id="1_pmkcc"]
 [ext_resource type="PackedScene" uid="uid://bsn7ot3d2yqo4" path="res://sword.tscn" id="2_2dsso"]
 [ext_resource type="Texture2D" uid="uid://cmbljq8ox8hr4" path="res://Character 1.png" id="2_jnsu5"]
+[ext_resource type="Script" path="res://sword.gd" id="3_uf0l8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g126b"]
 radius = 8.0
@@ -92,10 +93,12 @@ animations = [{
 }]
 
 [node name="Player" type="CharacterBody2D"]
+collision_layer = 2
 platform_floor_layers = 0
 script = ExtResource("1_khyeu")
 
 [node name="Sword" parent="." instance=ExtResource("2_2dsso")]
+script = ExtResource("3_uf0l8")
 
 [node name="ground_shadow" type="Sprite2D" parent="."]
 modulate = Color(0.442911, 0.442911, 0.442911, 1)
@@ -112,6 +115,7 @@ shape = SubResource("CircleShape2D_g126b")
 unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_flram")
 animation = &"idle"
-frame_progress = 0.36897
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]

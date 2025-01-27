@@ -1,10 +1,31 @@
-[gd_scene load_steps=9 format=3 uid="uid://dcwqrrvou0086"]
+[gd_scene load_steps=10 format=3 uid="uid://dcwqrrvou0086"]
 
 [ext_resource type="PackedScene" uid="uid://dffhgif5rvd28" path="res://player.tscn" id="1_c36jc"]
-[ext_resource type="PackedScene" uid="uid://cmqqdxx0wmto3" path="res://mob_plague_bat.tscn" id="2_o5prk"]
+[ext_resource type="Script" path="res://gramrise.gd" id="1_q4mtn"]
 [ext_resource type="Texture2D" uid="uid://c7gv4sunw54t4" path="res://Assets/AnimatedTreeFree/AnimatedAutum.png" id="3_21sq5"]
 [ext_resource type="Script" path="res://tree.gd" id="4_rokhd"]
 [ext_resource type="Script" path="res://tree2.gd" id="5_h114i"]
+
+[sub_resource type="Curve2D" id="Curve2D_wt4ut"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -69, -178, 0, 0, 0, 0, 1276, -175, 0, 0, 0, 0, 1281, 731, 0, 0, 0, 0, -72, 725, 0, 0, 0, 0, -70, -172)
+}
+point_count = 5
+
+[sub_resource type="Animation" id="Animation_w0qls"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
 
 [sub_resource type="Animation" id="Animation_1i84g"]
 resource_name = "Sway"
@@ -23,21 +44,6 @@ tracks/0/keys = {
 "values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 }
 
-[sub_resource type="Animation" id="Animation_w0qls"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_76ici"]
 _data = {
 "RESET": SubResource("Animation_w0qls"),
@@ -45,6 +51,7 @@ _data = {
 }
 
 [node name="Gramrise" type="Node2D"]
+script = ExtResource("1_q4mtn")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 layer = -10
@@ -55,38 +62,50 @@ offset_top = -14.0
 offset_right = 1221.0
 offset_bottom = 652.0
 color = Color(0.741385, 0.741385, 0.741385, 1)
+metadata/_edit_use_anchors_ = true
 
 [node name="Player" parent="." instance=ExtResource("1_c36jc")]
+unique_name_in_owner = true
 position = Vector2(626, 316)
 
-[node name="mob_plague_bat" parent="." instance=ExtResource("2_o5prk")]
-position = Vector2(197, 135)
+[node name="Path2D" type="Path2D" parent="Player"]
+position = Vector2(-626, -316)
+curve = SubResource("Curve2D_wt4ut")
 
-[node name="mob_plague_bat2" parent="." instance=ExtResource("2_o5prk")]
-position = Vector2(358, 369)
+[node name="PathFollow2D" type="PathFollow2D" parent="Player/Path2D"]
+unique_name_in_owner = true
+position = Vector2(889.161, 729.262)
+rotation = -3.13716
+progress = 2642.86
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Tree1" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(494, 300)
 texture = ExtResource("3_21sq5")
 hframes = 16
 script = ExtResource("4_rokhd")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree1"]
 libraries = {
 "": SubResource("AnimationLibrary_76ici")
 }
 speed_scale = 1.956
 
-[node name="Sprite2D2" type="Sprite2D" parent="."]
+[node name="Tree2" type="Sprite2D" parent="."]
 texture_filter = 1
 position = Vector2(363, 147)
 texture = ExtResource("3_21sq5")
 hframes = 16
 script = ExtResource("5_h114i")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite2D2"]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree2"]
 libraries = {
 "": SubResource("AnimationLibrary_76ici")
 }
 speed_scale = 1.956
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.3
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
