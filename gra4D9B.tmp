@@ -1,0 +1,98 @@
+[gd_scene load_steps=11 format=3 uid="uid://dcwqrrvou0086"]
+
+[ext_resource type="Script" path="res://game_manager.gd" id="1_ax6fo"]
+[ext_resource type="PackedScene" uid="uid://dffhgif5rvd28" path="res://player.tscn" id="1_c36jc"]
+[ext_resource type="Script" path="res://gramrise.gd" id="1_q4mtn"]
+[ext_resource type="PackedScene" uid="uid://cmqqdxx0wmto3" path="res://mob_plague_bat.tscn" id="2_o5prk"]
+[ext_resource type="Texture2D" uid="uid://c7gv4sunw54t4" path="res://Assets/AnimatedTreeFree/AnimatedAutum.png" id="3_21sq5"]
+[ext_resource type="Script" path="res://tree.gd" id="4_rokhd"]
+[ext_resource type="Script" path="res://tree2.gd" id="5_h114i"]
+
+[sub_resource type="Animation" id="Animation_w0qls"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_1i84g"]
+resource_name = "Sway"
+length = 4.1
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.266667, 0.533333, 0.8, 1.06667, 1.33333, 1.6, 1.86667, 2.13333, 2.4, 2.66667, 2.93333, 3.2, 3.46667, 3.73333, 4.03333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_76ici"]
+_data = {
+"RESET": SubResource("Animation_w0qls"),
+"Sway": SubResource("Animation_1i84g")
+}
+
+[node name="Gramrise" type="Node2D"]
+script = ExtResource("1_q4mtn")
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource("1_ax6fo")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+offset_left = -23.0
+offset_top = -14.0
+offset_right = 1221.0
+offset_bottom = 652.0
+color = Color(0.741385, 0.741385, 0.741385, 1)
+
+[node name="Player" parent="." instance=ExtResource("1_c36jc")]
+position = Vector2(626, 316)
+
+[node name="mob_plague_bat" parent="." instance=ExtResource("2_o5prk")]
+position = Vector2(197, 135)
+
+[node name="mob_plague_bat2" parent="." instance=ExtResource("2_o5prk")]
+position = Vector2(358, 369)
+
+[node name="Tree1" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(494, 300)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree1"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree2" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(363, 147)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("5_h114i")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree2"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956

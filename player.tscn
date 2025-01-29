@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://dffhgif5rvd28"]
+[gd_scene load_steps=21 format=3 uid="uid://dffhgif5rvd28"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_khyeu"]
 [ext_resource type="Texture2D" uid="uid://721gieuy5dp6" path="res://ground_shadow.png" id="1_pmkcc"]
@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://sword.gd" id="3_uf0l8"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_g126b"]
-radius = 8.0
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_u2pep"]
 atlas = ExtResource("2_jnsu5")
@@ -92,12 +91,29 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="CircleShape2D" id="CircleShape2D_wxhs5"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_v3wgm"]
+bg_color = Color(0.266575, 0.266575, 0.266575, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_a1x6r"]
+bg_color = Color(0.360784, 0.690196, 0.223529, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
 [node name="Player" type="CharacterBody2D"]
 collision_layer = 2
 platform_floor_layers = 0
 script = ExtResource("1_khyeu")
 
 [node name="Sword" parent="." instance=ExtResource("2_2dsso")]
+show_behind_parent = true
 script = ExtResource("3_uf0l8")
 
 [node name="ground_shadow" type="Sprite2D" parent="."]
@@ -110,6 +126,7 @@ texture = ExtResource("1_pmkcc")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 14)
 shape = SubResource("CircleShape2D_g126b")
+disabled = true
 
 [node name="player_sprite" type="AnimatedSprite2D" parent="."]
 unique_name_in_owner = true
@@ -117,5 +134,24 @@ sprite_frames = SubResource("SpriteFrames_flram")
 animation = &"idle"
 
 [node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="HurtBox" type="Area2D" parent="."]
+unique_name_in_owner = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HurtBox"]
+position = Vector2(0, 11)
+shape = SubResource("CircleShape2D_wxhs5")
+debug_color = Color(0.824884, 0.397678, 0.046412, 0.42)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+unique_name_in_owner = true
+offset_left = -12.0
+offset_top = 22.0
+offset_right = 12.0
+offset_bottom = 26.0
+theme_override_styles/background = SubResource("StyleBoxFlat_v3wgm")
+theme_override_styles/fill = SubResource("StyleBoxFlat_a1x6r")
+value = 51.0
+show_percentage = false
 
 [connection signal="body_entered" from="Sword" to="Sword" method="_on_body_entered"]
