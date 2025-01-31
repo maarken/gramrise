@@ -17,7 +17,7 @@ func _ready() -> void:
 	
 func add_score():
 	score += 1
-	print(score)
+	$Score.value = score
 	
 func _physics_process(delta):
 	

@@ -1,16 +1,31 @@
-[gd_scene load_steps=10 format=3 uid="uid://dcwqrrvou0086"]
+[gd_scene load_steps=14 format=3 uid="uid://dcwqrrvou0086"]
 
 [ext_resource type="PackedScene" uid="uid://dffhgif5rvd28" path="res://player.tscn" id="1_c36jc"]
 [ext_resource type="Script" path="res://gramrise.gd" id="1_q4mtn"]
 [ext_resource type="Texture2D" uid="uid://c7gv4sunw54t4" path="res://Assets/AnimatedTreeFree/AnimatedAutum.png" id="3_21sq5"]
 [ext_resource type="Script" path="res://tree.gd" id="4_rokhd"]
 [ext_resource type="Script" path="res://tree2.gd" id="5_h114i"]
+[ext_resource type="FontFile" uid="uid://yhtg7w6jugdk" path="res://MainMenu/PixelGamingRegular-d9w0g.ttf" id="6_xh3sl"]
+
+[sub_resource type="Theme" id="Theme_dve2k"]
+default_font = ExtResource("6_xh3sl")
+default_font_size = 50
 
 [sub_resource type="Curve2D" id="Curve2D_wt4ut"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, -69, -178, 0, 0, 0, 0, 1276, -175, 0, 0, 0, 0, 1281, 731, 0, 0, 0, 0, -72, 725, 0, 0, 0, 0, -70, -172)
 }
 point_count = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ngk2"]
+bg_color = Color(0.635294, 0.588235, 0.592157, 0.172549)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w3fhj"]
+bg_color = Color(0.840459, 0.506504, 0.249285, 1)
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
 
 [sub_resource type="Animation" id="Animation_w0qls"]
 length = 0.001
@@ -53,10 +68,70 @@ _data = {
 [node name="Gramrise" type="Node2D"]
 script = ExtResource("1_q4mtn")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="GameOver" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+process_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="GameOver"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.866667)
+
+[node name="GameOver" type="Label" parent="GameOver/ColorRect"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -182.5
+offset_top = -62.0
+offset_right = 182.5
+offset_bottom = 62.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_fonts/font = ExtResource("6_xh3sl")
+theme_override_font_sizes/font_size = 73
+text = "Game Over"
+
+[node name="Quit" type="Button" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 58.0
+offset_top = 47.5
+offset_right = 166.0
+offset_bottom = 118.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_dve2k")
+text = "Quit"
+
+[node name="Retry" type="Button" parent="GameOver"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -157.0
+offset_top = 46.5
+offset_right = -49.0
+offset_bottom = 117.5
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_dve2k")
+text = "Retry
+"
+
+[node name="Ingame" type="CanvasLayer" parent="."]
 layer = -10
 
-[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+[node name="ColorRect" type="ColorRect" parent="Ingame"]
 offset_left = -22.0
 offset_top = -12.0
 offset_right = 1222.0
@@ -79,146 +154,165 @@ position = Vector2(889.161, 729.262)
 rotation = -3.13716
 progress = 2642.86
 
-[node name="Tree1" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(494, 300)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("4_rokhd")
+[node name="Score" type="ProgressBar" parent="Player"]
+unique_name_in_owner = true
+offset_left = -573.0
+offset_top = -313.0
+offset_right = -381.0
+offset_bottom = -304.0
+theme_override_styles/background = SubResource("StyleBoxFlat_3ngk2")
+theme_override_styles/fill = SubResource("StyleBoxFlat_w3fhj")
+rounded = true
+show_percentage = false
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree1"]
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
-
-[node name="Tree2" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(363, 147)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("5_h114i")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree2"]
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
+[node name="RichTextLabel" type="RichTextLabel" parent="Player/Score"]
+layout_mode = 0
+offset_left = 34.0
+offset_top = 11.0
+offset_right = 158.0
+offset_bottom = 40.0
+theme_override_fonts/normal_font = ExtResource("6_xh3sl")
+theme_override_font_sizes/bold_italics_font_size = 1
+theme_override_font_sizes/normal_font_size = 18
+text = "Level Progress"
 
 [node name="Timer" type="Timer" parent="."]
 wait_time = 0.3
 autostart = true
 
-[node name="Tree3" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(725, 494)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("4_rokhd")
+[node name="Trees" type="CanvasGroup" parent="."]
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree3"]
-root_node = NodePath("../../Tree3")
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
-
-[node name="Tree4" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(988, 350)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("4_rokhd")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree4"]
-root_node = NodePath("../../Tree4")
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
-
-[node name="Tree5" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(749, 223)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("4_rokhd")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree5"]
-root_node = NodePath("../../Tree5")
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
-
-[node name="Tree6" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(1062, 129)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("4_rokhd")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree6"]
-root_node = NodePath("../../Tree6")
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
-
-[node name="Tree7" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(663, 51)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("4_rokhd")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree7"]
-root_node = NodePath("../../Tree7")
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
-
-[node name="Tree8" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(178, 231)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("4_rokhd")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree8"]
-root_node = NodePath("../../Tree8")
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
-
-[node name="Tree9" type="Sprite2D" parent="."]
-texture_filter = 1
-position = Vector2(999, 533)
-texture = ExtResource("3_21sq5")
-hframes = 16
-script = ExtResource("4_rokhd")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree9"]
-root_node = NodePath("../../Tree9")
-libraries = {
-"": SubResource("AnimationLibrary_76ici")
-}
-speed_scale = 1.956
-
-[node name="Tree10" type="Sprite2D" parent="."]
+[node name="Tree10" type="Sprite2D" parent="Trees"]
 texture_filter = 1
 position = Vector2(239, 464)
 texture = ExtResource("3_21sq5")
 hframes = 16
 script = ExtResource("4_rokhd")
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Tree10"]
-root_node = NodePath("../../Tree10")
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree10"]
 libraries = {
 "": SubResource("AnimationLibrary_76ici")
 }
 speed_scale = 1.956
 
+[node name="Tree8" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(178, 231)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree8"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree9" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(999, 533)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree9"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree7" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(663, 51)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree7"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree6" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(1062, 129)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree6"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree5" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(749, 223)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree5"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree4" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(988, 350)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree4"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree3" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(725, 494)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree3"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree2" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(363, 147)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("5_h114i")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree2"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[node name="Tree1" type="Sprite2D" parent="Trees"]
+texture_filter = 1
+position = Vector2(494, 300)
+texture = ExtResource("3_21sq5")
+hframes = 16
+script = ExtResource("4_rokhd")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Trees/Tree1"]
+libraries = {
+"": SubResource("AnimationLibrary_76ici")
+}
+speed_scale = 1.956
+
+[connection signal="pressed" from="GameOver/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="GameOver/Retry" to="." method="_on_continue_pressed"]
+[connection signal="health_depleted" from="Player" to="." method="_on_player_health_depleted"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
